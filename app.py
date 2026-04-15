@@ -64,9 +64,8 @@ def ticker_exists_polygon(ticker: str, api_key: str) -> bool:
     try:
         from polygon import RESTClient
         client = RESTClient(api_key=api_key)
-        splits = list(client.list_splits(ticker=ticker, limit=1))
-        # also verify ticker has recent data
-        return True  # if no exception, ticker is valid
+        result = client.get_ticker_details(ticker)
+        return result is not None
     except Exception:
         return False
 
