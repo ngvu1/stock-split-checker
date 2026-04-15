@@ -20,7 +20,7 @@ def format_ratio(ratio: float, split_type: str) -> str:
     if ratio <= 0: return f"raw ratio={ratio}"
     frac = Fraction(ratio).limit_denominator(20)
     n, d = frac.numerator, frac.denominator
-    return f"{d}-for-{n}"
+    return f"{d}-to-{n}"
 
 
 def ticker_exists(ticker: str) -> bool:
