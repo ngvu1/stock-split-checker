@@ -54,7 +54,7 @@ def get_splits_yahoo(ticker: str, years: int) -> List[Tuple[str, float, str, str
         split_type = classify_split(ratio)
         date_str = dt.strftime("%Y-%m-%d") if hasattr(dt, "strftime") else str(dt)
         close = row.get("Close", None)
-        price_str = f"${close:.2f}" if close is not None else "N/A"
+        price_str = f"${close:,.2f}" if close is not None else "N/A"
         results.append((date_str, ratio, format_ratio(ratio, split_type), split_type, price_str))
     return results
 
