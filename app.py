@@ -9,6 +9,7 @@ import yfinance as yf
 st.set_page_config(page_title="Stock Split History", page_icon="📈")
 st.title("📈 Stock Split History Checker")
 st.caption("⚠️ Data is sourced from Yahoo Finance. It may be incomplete or inaccurate. Use this tool with caution and verify important information independently.")
+st.divider()
 
 
 def classify_split(ratio: float) -> str:
