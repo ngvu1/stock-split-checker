@@ -85,3 +85,6 @@ if st.button("Check Splits", type="primary"):
                             "Raw Ratio": raw_ratio,
                         })
                     st.table(rows)
+
+st.divider()
+st.caption("💡 Tip: If a valid ticker shows as invalid or returns no data, try clicking 'Check Splits' again. Yahoo Finance can occasionally be slow to respond.")
