@@ -33,7 +33,7 @@ def ticker_exists(ticker: str) -> bool:
         return False
 
 
-def get_splits(ticker: str, years: int) -> List[Tuple[str, float, str, str]]:
+def get_splits(ticker: str, years: int) -> List[Tuple[str, float, str, str, str]]:
     stock = yf.Ticker(ticker)
     end_date = datetime.now(timezone.utc)
     start_date = end_date - timedelta(days=365 * years + 3)
@@ -52,7 +52,9 @@ def get_splits(ticker: str, years: int) -> List[Tuple[str, float, str, str]]:
         ratio = float(row["Stock Splits"])
         split_type = classify_split(ratio)
         date_str = dt.strftime("%Y-%m-%d") if hasattr(dt, "strftime") else str(dt)
-        results.append((date_str, ratio, format_ratio(ratio, split_type), split_type))
+        close = row.get("Close", None)
+        price_str = f"${close:.2f}" if close is not None else "N/A"
+        results.append((date_str, ratio, format_ratio(ratio, split_type), split_type, price_str))
     return results
 
 
@@ -69,7 +71,7 @@ if st.button("Check Splits", type="primary"):
     else:
         with st.spinner(f"Looking up {ticker}..."):
             if not ticker_exists(ticker):
-                st.error(f"❌ 'Cannot retrieve infor mation for ticker {ticker}'.")
+                st.error(f"❌ 'Cannot retrieve information for ticker {ticker}'.")
             else:
                 splits = get_splits(ticker, years)
                 if not splits:
@@ -77,12 +79,13 @@ if st.button("Check Splits", type="primary"):
                 else:
                     st.success(f"Found {len(splits)} split(s) for **{ticker}** in the last {years} year(s).")
                     rows = []
-                    for date_str, raw_ratio, ratio_text, split_type in splits:
+                    for date_str, raw_ratio, ratio_text, split_type, price_str in splits:
                         rows.append({
                             "Date": date_str,
                             "Ratio": ratio_text,
                             "Type": split_type,
                             "Raw Ratio": raw_ratio,
+                            "Price After Split": price_str,
                         })
                     st.table(rows)
 
