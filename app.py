@@ -85,7 +85,7 @@ if st.button("Check Splits", type="primary"):
                             "Ratio": ratio_text,
                             "Type": split_type,
                             "Raw Ratio": raw_ratio,
-                            "Price After Split": price_str,
+                            "Price After Split (adjusted)": price_str,
                         })
                     st.table(rows)
 
