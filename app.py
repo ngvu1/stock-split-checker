@@ -57,9 +57,9 @@ def get_splits(ticker: str, years: int) -> List[Tuple[str, float, str, str]]:
 # --- UI ---
 col1, col2 = st.columns([2, 1])
 with col1:
-    ticker = st.text_input("Ticker Symbol", placeholder="e.g. AAPL").strip().upper()
+    ticker = st.text_input("Ticker Symbol", value="SOXL").strip().upper()
 with col2:
-    years = st.number_input("Years to check", min_value=1, max_value=50, value=10)
+    years = st.number_input("Years to check (1-50)", min_value=1, max_value=50, value=10)
 
 if st.button("Check Splits", type="primary"):
     if not ticker:
