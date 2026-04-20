@@ -20,8 +20,13 @@ def classify_split(ratio: float) -> str:
 
 def format_ratio(ratio: float, split_type: str) -> str:
     if ratio <= 0: return f"raw ratio={ratio}"
-    frac = Fraction(ratio).limit_denominator(20)
+    frac = Fraction(ratio).limit_denominator(1000)
     n, d = frac.numerator, frac.denominator
+    # if limit was hit, the fraction is approximate — show raw instead
+    if d == 1000 or n == 1000:
+        if split_type == "reverse":
+            return f"{round(1/ratio)}-for-1 (approx)"
+        return f"1-for-{round(ratio)} (approx)"
     return f"{d}-for-{n}"
 
 
